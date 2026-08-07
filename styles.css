@@ -1,0 +1,200 @@
+@font-face {
+  font-family: "Source Serif 4";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/fonts/source-serif-4-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Source Serif 4 Fallback";
+  src: local("Times New Roman");
+  ascent-override: 87.87%;
+  descent-override: 28.41%;
+  line-gap-override: 0%;
+  size-adjust: 117.91%;
+}
+
+:root {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #111111;
+  --muted: #555555;
+  --line: #e5e5e5;
+  --link: #0b5cad;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--background);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  color: var(--foreground);
+  font-family: "Source Serif 4", "Source Serif 4 Fallback", Charter, Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2 {
+  font-size: inherit;
+  font-weight: 600;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 64rem;
+  min-height: 100svh;
+  margin-inline: auto;
+  overflow-x: hidden;
+  padding-top: calc(3rem + env(safe-area-inset-top));
+  padding-right: calc(1.25rem + env(safe-area-inset-right));
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+  padding-left: calc(1.25rem + env(safe-area-inset-left));
+}
+
+main {
+  flex: 1;
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.portrait {
+  width: 200px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.bio-copy {
+  min-width: 0;
+}
+
+.introduction {
+  margin-top: 0.75rem;
+}
+
+.contact-links {
+  margin-top: 1.25rem;
+}
+
+.separator {
+  margin-inline: 0.5rem;
+  color: var(--muted);
+}
+
+section {
+  margin-top: 3rem;
+}
+
+section > h2 {
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.4rem;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  column-gap: 1.25rem;
+}
+
+.entry > div {
+  min-width: 0;
+}
+
+.period {
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.entry-title {
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.compact {
+  line-height: 1.375;
+}
+
+.projects > li:not(:last-child) {
+  margin-bottom: 1.25rem;
+}
+
+.project-details,
+.project-links {
+  margin-top: 0.25rem;
+}
+
+.project-details {
+  padding-left: 1.5rem;
+}
+
+.title-link {
+  color: var(--foreground);
+}
+
+@media (min-width: 40rem) {
+  .page {
+    padding-top: 4rem;
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+  }
+
+  .bio {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .entry {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .period {
+    width: 7rem;
+  }
+}
