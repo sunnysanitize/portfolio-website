@@ -1,7 +1,3 @@
-# local tooling
-/docs/superpowers/
-/.claude/
-
 # macOS
 .DS_Store
 
