@@ -1,2 +1,3 @@
-My portfolio website, www.sunnyzhang.dev
-Previously was build with Next.js but this now is pure HTML
+My portfolio website, www.sunnyzhang.dev.    
+
+Old website was built with Next.js but this new one is HTML + CSS
