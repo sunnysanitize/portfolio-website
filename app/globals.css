@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-serif);
+
+  /* Classic academic page: white paper, black ink, one blue for links. */
+  --color-background: #ffffff;
+  --color-foreground: #111111;
+  --color-muted-foreground: #555555;
+  --color-line: #e5e5e5;
+  --color-link: #0b5cad;
+}
+
+html,
+body {
+  min-height: 100%;
+  background-color: #ffffff;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-serif), Charter, "Source Serif 4", Georgia, serif;
+  color: #111111;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Sections ─────────────────────────────────────────────────── */
+
+/* One type size across the whole page — weight and the hairline do all the
+   separating, so headings share the body size rather than shrinking to a
+   letterspaced uppercase eyebrow. */
+.section-heading {
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-line);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+/* ── Links ────────────────────────────────────────────────────── */
+
+/* In @layer base so Tailwind utilities (text-foreground, etc.) still win. */
+@layer base {
+  a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,3 +1,5 @@
-My portfolio website, www.sunnyzhang.dev.    
+# sunnyzhang.dev
 
-Old website was built with Next.js but this new one is HTML + CSS
+Personal developer portfolio
+
+Live at **[sunnyzhang.dev](https://sunnyzhang.dev)**.

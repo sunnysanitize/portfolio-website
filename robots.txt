@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://sunnyzhang.dev/sitemap.xml
-Host: https://sunnyzhang.dev
