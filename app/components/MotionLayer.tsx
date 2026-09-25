@@ -19,6 +19,13 @@ export default function MotionLayer() {
     document.querySelectorAll(".reveal-on-scroll").forEach((el) => reveal.observe(el));
     if (reduced) return () => reveal.disconnect();
 
+    // pointermove also fires for touch drags, so on a phone this ran on every
+    // frame of a scroll — each call invalidates .pointer-glow's gradient and
+    // repaints a full-screen layer. Pointer parallax is a fine-pointer feature.
+    if (!window.matchMedia("(pointer: fine)").matches) {
+      return () => reveal.disconnect();
+    }
+
     const onPointerMove = (event: PointerEvent) => {
       root.style.setProperty("--pointer-x", `${event.clientX}px`);
       root.style.setProperty("--pointer-y", `${event.clientY}px`);

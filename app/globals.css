@@ -337,3 +337,24 @@ body::before {
   .city-canvas { opacity: .55; }
   .mouse-icon::after { animation: none; }
 }
+
+/* ── Mobile render budget ─────────────────────────────────────────
+   The WebGL city and these decorative layers all draw on one GPU. Every
+   fixed, full-viewport layer that uses mix-blend-mode, a large blur, or a
+   backdrop-filter forces the compositor to re-read and re-blend the whole
+   screen each frame, which is budget the canvas needs to keep the car moving
+   at the same rate the page scrolls. Phones get the scene, not the garnish. */
+@media (max-width: 900px), (pointer: coarse) {
+  /* full-screen mix-blend-mode layers */
+  body::before,
+  .drive-experience::after { display: none; }
+
+  /* blur(100px) on a 42vw box, re-blurred every frame by orb-breathe */
+  .ambient-orb,
+  .scanline,
+  .pointer-glow { display: none; }
+
+  /* six stacked backdrop reads; the cards are already near-opaque here */
+  .stop-card { backdrop-filter: none; }
+  .project-number { backdrop-filter: none; }
+}

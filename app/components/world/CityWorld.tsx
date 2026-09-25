@@ -2,8 +2,17 @@
 
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Sparkles } from "@react-three/drei";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import SceneBoundary from "./SceneBoundary";
+import { createContext, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+
+// Phones run the same scene at a fraction of the cost. The expensive part of a
+// forward-rendered three.js scene is the *light count* — every light is evaluated
+// in every lit fragment and lights are never frustum-culled, so an off-screen
+// streetlamp still costs. Low power drops ~35 of the 39 lights, the shadow pass
+// and MSAA, which is what keeps the car moving at the same rate as the page.
+const LowPowerContext = createContext(false);
+const useLowPower = () => useContext(LowPowerContext);
 
 const ROAD_END = -156;
 // Scenery runs well past the car's final stop so the drive fades into fog
@@ -106,6 +115,7 @@ function Building({ index, slot, side }: { index: number; slot: number; side: -1
 }
 
 function StreetUnit({ index, side }: { index: number; side: -1 | 1 }) {
+  const lowPower = useLowPower();
   const z = 4 - index * 9;
   const color = index % 2 ? "#12f1ff" : "#ff4b26";
   return (
@@ -114,7 +124,7 @@ function StreetUnit({ index, side }: { index: number; side: -1 | 1 }) {
       <mesh position={[-side * 0.55, 5.55, 0]}><boxGeometry args={[1.1, 0.08, 0.08]} /><meshStandardMaterial color="#333b49" metalness={0.9} /></mesh>
       <mesh position={[-side * 1.05, 5.42, 0]}><boxGeometry args={[0.32, 0.16, 0.78]} /><meshBasicMaterial color="#e8ffff" toneMapped={false} /></mesh>
       <mesh position={[-side * 2.5, 0.055, 0]} rotation={[-Math.PI / 2, 0, 0]}><circleGeometry args={[4.2, 28]} /><meshBasicMaterial color={color} transparent opacity={0.075} blending={THREE.AdditiveBlending} depthWrite={false} /></mesh>
-      {index % 3 === 0 && <pointLight position={[-side * 2.25, 4.8, 0]} color={index % 2 ? "#baf8ff" : "#ffd4b3"} intensity={68} distance={16} decay={2} />}
+      {!lowPower && index % 3 === 0 && <pointLight position={[-side * 2.25, 4.8, 0]} color={index % 2 ? "#baf8ff" : "#ffd4b3"} intensity={68} distance={16} decay={2} />}
       <mesh position={[0, 0.42, 0]}><boxGeometry args={[0.32, 0.84, 0.32]} /><meshStandardMaterial color="#161b25" metalness={0.75} /></mesh>
     </group>
   );
@@ -196,11 +206,12 @@ function WindowField() {
 }
 
 function Hologram({ position, color, tall = false }: { position: [number, number, number]; color: string; tall?: boolean }) {
+  const lowPower = useLowPower();
   return <group position={position}>
     <mesh><boxGeometry args={[0.12, tall ? 6.5 : 3.6, tall ? 3.4 : 5]} /><meshBasicMaterial color={color} transparent opacity={0.11} side={THREE.DoubleSide} blending={THREE.AdditiveBlending} /></mesh>
     <mesh position={[-0.08, 0, 0]}><boxGeometry args={[0.06, tall ? 6.8 : 3.9, tall ? 3.7 : 5.3]} /><meshBasicMaterial color={color} wireframe transparent opacity={0.65} /></mesh>
     {[-0.34, 0, 0.34].map((offset) => <mesh key={offset} position={[-0.15, offset * (tall ? 7 : 4), 0]}><boxGeometry args={[0.04, 0.035, tall ? 3.2 : 4.8]} /><meshBasicMaterial color={color} /></mesh>)}
-    <pointLight color={color} intensity={2.5} distance={9} />
+    {!lowPower && <pointLight color={color} intensity={2.5} distance={9} />}
   </group>;
 }
 
@@ -402,6 +413,7 @@ function Storefronts() {
 }
 
 function Traffic() {
+  const lowPower = useLowPower();
   const group = useRef<THREE.Group>(null);
   useFrame(({ clock }) => {
     if (!group.current) return;
@@ -410,7 +422,7 @@ function Traffic() {
       vehicle.position.z = ((travelled % 250) + 250) % 250 - 240;
     });
   });
-  return <group ref={group}>{Array.from({ length: 8 }).map((_, index) => {
+  return <group ref={group}>{Array.from({ length: lowPower ? 4 : 8 }).map((_, index) => {
     const trafficLanes = [-4.35, -1.65];
     const x = trafficLanes[index % trafficLanes.length];
     const accent = index % 3 === 0 ? "#ff315f" : index % 3 === 1 ? "#12f1ff" : "#8c5cff";
@@ -427,7 +439,7 @@ function Traffic() {
         <mesh rotation={[0, 0, Math.PI / 2]}><cylinderGeometry args={[0.16, 0.16, 0.07, 10]} /><meshStandardMaterial color="#85909e" metalness={1} roughness={0.2} /></mesh>
       </group>))}
       <mesh position={[0, -0.32, 0]} rotation={[-Math.PI / 2, 0, 0]}><planeGeometry args={[1.7, 3.7]} /><meshBasicMaterial color={accent} transparent opacity={0.16} blending={THREE.AdditiveBlending} /></mesh>
-      <pointLight position={[0, 0, 2.05]} color="#d9ffff" intensity={2.2} distance={7} />
+      {!lowPower && <pointLight position={[0, 0, 2.05]} color="#d9ffff" intensity={2.2} distance={7} />}
     </group>;
   })}</group>;
 }
@@ -498,6 +510,7 @@ function City() {
 }
 
 function Car({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
+  const lowPower = useLowPower();
   const car = useRef<THREE.Group>(null);
   const rearGlow = useRef<THREE.PointLight>(null);
   // Spotlights need an Object3D to aim at; one per lamp, parented to the car.
@@ -610,12 +623,55 @@ function Car({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
         <spotLight position={[side * 0.72, 0.16, -2.5]} target={beamTargets[index]} color="#e6f9ff" angle={0.38} penumbra={0.8} intensity={42} distance={24} decay={1.8} />
       </group>)}
       <pointLight position={[0, 0.15, -2.7]} color="#dffcff" intensity={7} distance={14} />
-      <pointLight position={[0, -0.25, 0]} color="#12f1ff" intensity={4} distance={6} />
-      <pointLight position={[0, 3.2, 1]} color="#d5e7ff" intensity={12} distance={9} decay={2} />
-      <pointLight position={[0, 1.1, 3.2]} color="#ff6480" intensity={18} distance={7} decay={2} />
+      {!lowPower && <>
+        <pointLight position={[0, -0.25, 0]} color="#12f1ff" intensity={4} distance={6} />
+        <pointLight position={[0, 3.2, 1]} color="#d5e7ff" intensity={12} distance={9} decay={2} />
+        <pointLight position={[0, 1.1, 3.2]} color="#ff6480" intensity={18} distance={7} decay={2} />
+      </>}
       <pointLight ref={rearGlow} position={[0, 0.05, 2.5]} color="#ff244d" intensity={5} distance={9} />
     </group>
   );
+}
+
+/**
+ * Samples scroll position inside the render loop instead of from scroll events.
+ *
+ * On iOS the momentum phase of a scroll is run by the compositor, and `scroll`
+ * events are dispatched to JS coalesced and irregularly — bursts, then gaps —
+ * with no alignment to the frame clock. Feeding those bursts into the car's
+ * damp() turned a constant-velocity scroll into surge/stall: the target leapt
+ * when a burst landed, the car chased it, then the target went stale and the
+ * car coasted. The DOM cards never showed it because the compositor moves them
+ * directly, which is exactly why the two looked out of step.
+ *
+ * Reading window.scrollY once per frame instead gives the same value the
+ * compositor is scrolling the cards to, at the same cadence we draw. This is
+ * what ScrollTrigger and Lenis both do, and for the same reason.
+ */
+function ScrollProgress({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
+  const maxRef = useRef(1);
+
+  useEffect(() => {
+    // scrollHeight is a layout read, so it stays out of the frame loop and is
+    // refreshed only when something can actually have changed the page height.
+    const measure = () => {
+      maxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
+    return () => {
+      window.removeEventListener("resize", measure);
+      observer.disconnect();
+    };
+  }, [progressRef]);
+
+  useFrame(() => {
+    progressRef.current = Math.min(1, Math.max(0, window.scrollY / maxRef.current));
+  });
+
+  return null;
 }
 
 function CameraRig({ progressRef, compact }: { progressRef: React.MutableRefObject<number>; compact: boolean }) {
@@ -635,18 +691,22 @@ function CameraRig({ progressRef, compact }: { progressRef: React.MutableRefObje
   return null;
 }
 
-function Scene({ progressRef, compact }: { progressRef: React.MutableRefObject<number>; compact: boolean }) {
+function Scene({ progressRef, compact, lowPower }: { progressRef: React.MutableRefObject<number>; compact: boolean; lowPower: boolean }) {
+  // The provider lives inside <Canvas> on purpose: react-three-fiber renders its
+  // own reconciler tree, so context from outside the canvas does not reach it.
   return (
-    <>
+    <LowPowerContext.Provider value={lowPower}>
       <color attach="background" args={["#03040a"]} />
       <fog attach="fog" args={["#03040a", 17, 72]} />
-      <ambientLight intensity={0.38} color="#53618e" />
-      <directionalLight position={[4, 12, 8]} color="#9bb3ff" intensity={1.1} castShadow />
+      {/* Ambient comes up to cover for the ~35 punctual lights low power drops. */}
+      <ambientLight intensity={lowPower ? 0.56 : 0.38} color="#53618e" />
+      <directionalLight position={[4, 12, 8]} color="#9bb3ff" intensity={1.1} castShadow={!lowPower} />
+      <ScrollProgress progressRef={progressRef} />
       <City />
       <Car progressRef={progressRef} />
       <CameraRig progressRef={progressRef} compact={compact} />
-      <Sparkles count={300} scale={[28, 18, 250]} position={[0, 8, -110]} size={1.2} speed={0.35} color="#8ffcff" opacity={0.5} />
-    </>
+      <Sparkles count={lowPower ? 70 : 300} scale={[28, 18, 250]} position={[0, 8, -110]} size={1.2} speed={0.35} color="#8ffcff" opacity={0.5} />
+    </LowPowerContext.Provider>
   );
 }
 
@@ -654,7 +714,11 @@ export default function CityWorld() {
   const progressRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [compact, setCompact] = useState(false);
-  const dpr = useMemo<[number, number]>(() => [1, 1.5], []);
+  // null until the media queries have been read. dpr, antialias and shadows are
+  // all WebGL-context creation options, so mounting <Canvas> before we know the
+  // tier would force a full context teardown and rebuild a tick later.
+  const [quality, setQuality] = useState<"low" | "high" | null>(null);
+  const lowPower = quality === "low";
 
   useEffect(() => {
     const query = window.matchMedia("(max-width: 700px)");
@@ -665,20 +729,28 @@ export default function CityWorld() {
   }, []);
 
   useEffect(() => {
-    const update = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progressRef.current = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-    };
+    const query = window.matchMedia("(max-width: 900px), (pointer: coarse)");
+    const update = () => setQuality(query.matches ? "low" : "high");
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
   }, []);
 
   return (
     <div className={`city-canvas ${ready ? "is-ready" : ""}`} aria-hidden="true">
-      <Canvas dpr={dpr} camera={{ position: [6.2, 4.2, 12], fov: 48 }} shadows gl={{ antialias: true, powerPreference: "high-performance" }} onCreated={() => setReady(true)}>
-        <Scene progressRef={progressRef} compact={compact} />
-      </Canvas>
+      {quality !== null && (
+        <SceneBoundary>
+          <Canvas
+            dpr={lowPower ? 1 : [1, 1.5]}
+            camera={{ position: [6.2, 4.2, 12], fov: 48 }}
+            shadows={!lowPower}
+            gl={{ antialias: !lowPower, powerPreference: "high-performance" }}
+            onCreated={() => setReady(true)}
+          >
+            <Scene progressRef={progressRef} compact={compact} lowPower={lowPower} />
+          </Canvas>
+        </SceneBoundary>
+      )}
     </div>
   );
 }

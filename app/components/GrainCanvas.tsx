@@ -53,6 +53,14 @@ export default function GrainCanvas() {
       "(prefers-reduced-motion: reduce)",
     ).matches;
 
+    // Phones skip the grain entirely. A fixed, full-viewport layer with
+    // mix-blend-mode forces the compositor to re-blend the whole screen against
+    // everything beneath it every frame, which steals GPU budget from the WebGL
+    // city behind it — the canvas and the grain are contending for one GPU.
+    if (window.matchMedia("(max-width: 900px), (pointer: coarse)").matches) {
+      return;
+    }
+
     resize();
 
     if (reduceMotion) {
