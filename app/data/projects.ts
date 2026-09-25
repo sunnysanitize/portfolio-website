@@ -19,7 +19,7 @@ export const projects: Project[] = [
     shortDescription:
       "A multi-agent AI social simulation and prediction engine. Build a world, drop in your characters, fire off an event, and watch them reason, remember, form relationships, and shift opinions over simulated days, then read the swarm's forecast of where it's heading, like Tomodachi Life, but the villagers actually have opinions.",
     featuredDescription:
-      "Social simulation and prediction engine. Tomodachi Life, but the villagers actually have opinions.",
+      "Multi-agent LLM Tomodachi Life, where the villagers actually have opinions.",
     bullets: [
       "A multi-agent AI social simulation and prediction engine, where AI agents observe, remember, reflect, and shift opinions over 7 to 30+ simulated days, then forecast where the world is heading.",
       "Built with Next.js, FastAPI (Server-Sent Events), a Python generative-agents engine, and optional Supabase saves with JWT auth.",

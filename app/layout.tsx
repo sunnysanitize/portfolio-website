@@ -14,7 +14,7 @@ export const viewport: Viewport = {
 };
 
 const title = "Sunny Zhang | Portfolio";
-const description = "Sunny Zhang — Computer Science and Mathematics at the University of Toronto. Research in operations research, applied probability, and intelligent systems.";
+const description = "Sunny Zhang — Computer Science and Statistics at the University of Toronto. Interests in operations research and applied probability.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sunnyzhang.dev"),

@@ -3,12 +3,18 @@
 import { useEffect } from "react";
 import Lenis from "lenis";
 
+let instance: Lenis | null = null;
+
+export function getLenis() {
+  return instance;
+}
+
 export default function SmoothScroll() {
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reducedMotion.matches) return;
 
-    const lenis = new Lenis({
+    instance = new Lenis({
       autoRaf: true,
       lerp: 0.075,
       smoothWheel: true,
@@ -18,7 +24,10 @@ export default function SmoothScroll() {
       anchors: { duration: 1.35 },
     });
 
-    return () => lenis.destroy();
+    return () => {
+      instance?.destroy();
+      instance = null;
+    };
   }, []);
 
   return null;
