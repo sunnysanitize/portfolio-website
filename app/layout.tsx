@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import { sourceSerif } from "./fonts";
+import { geistSans, geistMono } from "./fonts";
+import SiteNav from "./components/SiteNav";
+import GrainCanvas from "./components/GrainCanvas";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: "#ffffff",
+  themeColor: "#0a0a0a",
 };
 
-const title = "Sunny Zhang";
-const description =
-  "Sunny Zhang — Computer Science and Mathematics, University of Toronto. Projects, experience, and contact.";
+const title = "Sunny Zhang | Portfolio";
+const description = "Developer portfolio: projects, experience, and contact.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sunnyzhang.dev"),
@@ -40,10 +41,16 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sourceSerif.variable} bg-background text-foreground antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
-        <div className="mx-auto flex min-h-[100svh] w-full max-w-[64rem] flex-col overflow-x-hidden px-5 pt-[calc(3rem+env(safe-area-inset-top))] pl-[calc(1.25rem+env(safe-area-inset-left))] pr-[calc(1.25rem+env(safe-area-inset-right))] pb-[calc(3rem+env(safe-area-inset-bottom))] sm:px-10 sm:pt-16">
-          <main className="flex-1">{children}</main>
+        <GrainCanvas />
+        <div className="relative z-10 flex min-h-[100svh] flex-col overflow-x-hidden px-5 pt-[calc(0.5rem+env(safe-area-inset-top))] pl-[calc(1.25rem+env(safe-area-inset-left))] pr-[calc(1.25rem+env(safe-area-inset-right))] pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:px-10 sm:pt-3 md:px-16">
+          <div className="relative mx-auto w-full max-w-6xl">
+            <SiteNav />
+          </div>
+          <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col pt-7 sm:pt-9">
+            {children}
+          </div>
         </div>
         <Analytics />
       </body>

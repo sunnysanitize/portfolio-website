@@ -1,10 +1,17 @@
-import { Source_Serif_4 } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
-// Source Serif 4: a text serif in the Charter/Source tradition, the type of face
-// academic personal pages use. Carries headings and body alike.
-export const sourceSerif = Source_Serif_4({
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
+// Geist: neutral neo-grotesque, the closest free stand-in for n1.xyz's
+// ABC Monument Grotesk. Used for the wordmark, headings, and body.
+export const geistSans = Geist({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-geist-sans",
+});
+
+// Geist Mono: utility face for eyebrows, section indices, dates, tags,
+// and the hero status strip — n1's technical data treatment.
+export const geistMono = Geist_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
 });

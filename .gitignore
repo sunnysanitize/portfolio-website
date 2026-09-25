@@ -20,10 +20,6 @@
 # production
 /build
 
-# local tooling
-/docs/superpowers/
-/.claude/
-
 # misc
 .DS_Store
 *.pem

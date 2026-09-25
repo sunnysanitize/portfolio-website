@@ -1,56 +1,209 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-serif);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
-  /* Classic academic page: white paper, black ink, one blue for links. */
-  --color-background: #ffffff;
-  --color-foreground: #111111;
-  --color-muted-foreground: #555555;
-  --color-line: #e5e5e5;
-  --color-link: #0b5cad;
+  /* n1.xyz dark theme: near-black base, off-white ink,
+     orange #ff4b26 primary accent, cyan #12f1ff secondary. */
+  --color-background: #0a0a0a;
+  --color-foreground: #f5f5f3;
+  --color-card: #141414;
+  --color-card-foreground: #f5f5f3;
+  --color-popover: #141414;
+  --color-primary: #ff4b26;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #1a1a1a;
+  --color-accent: #12f1ff;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #b4b4ae;
+  --color-line: #2e2e2b;
+  --color-ink: #050505;
+}
+
+/* n1.xyz easing curves — the source of its smooth, weighty motion. */
+:root {
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 }
 
 html,
 body {
   min-height: 100%;
-  background-color: #ffffff;
+  background-color: #0a0a0a;
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
-  font-family: var(--font-serif), Charter, "Source Serif 4", Georgia, serif;
-  color: #111111;
-  font-size: 17px;
-  line-height: 1.65;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  color: #f5f5f3;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Sections ─────────────────────────────────────────────────── */
-
-/* One type size across the whole page — weight and the hairline do all the
-   separating, so headings share the body size rather than shrinking to a
-   letterspaced uppercase eyebrow. */
-.section-heading {
-  font-weight: 600;
-  border-bottom: 1px solid var(--color-line);
-  padding-bottom: 0.4rem;
-  margin-bottom: 0.9rem;
+/* Static film-grain overlay (n1.xyz feTurbulence noise) — screen-blended for dark. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* ── Links ────────────────────────────────────────────────────── */
+/* ── Type utilities ───────────────────────────────────────────── */
 
-/* In @layer base so Tailwind utilities (text-foreground, etc.) still win. */
-@layer base {
-  a {
-    color: var(--color-link);
-    text-decoration: none;
+/* Mono eyebrow / kicker label */
+.eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* Mono section index (01 / 02 / 03) */
+.section-index {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  color: var(--color-primary);
+}
+
+/* ── Motion ───────────────────────────────────────────────────── */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Wordmark lines rise out of an overflow-hidden mask on load. */
+.reveal-mask {
+  overflow: hidden;
+}
+
+.reveal-line {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-line {
+    animation: rise 1s var(--ease-out-expo) both;
   }
 
-  a:hover {
-    text-decoration: underline;
+  .fade-in {
+    animation: fade-up 0.7s var(--ease-out-expo) both;
   }
+
+  .page-fade {
+    animation: fade-up 0.5s var(--ease-out-expo) both;
+  }
+}
+
+/* ── Components ────────────────────────────────────────────────── */
+
+/* Soft elevation used by the email modal */
+@utility shadow-soft {
+  box-shadow: 0 1px 2px rgba(10, 10, 10, 0.06), 0 4px 12px rgba(10, 10, 10, 0.06);
+}
+
+/* n1-style bracketed link: [ label ] with brackets that splay on hover */
+.bracket-link {
+  position: relative;
+  transition: color 0.25s var(--ease-out-expo);
+}
+
+.bracket-link::before,
+.bracket-link::after {
+  display: inline-block;
+  color: var(--color-primary);
+  transition: transform 0.35s var(--ease-out-expo), opacity 0.35s var(--ease-out-expo);
+}
+
+.bracket-link::before {
+  content: "[";
+  margin-right: 0.45em;
+  transform: translateX(0.3em);
+  opacity: 0.5;
+}
+
+.bracket-link::after {
+  content: "]";
+  margin-left: 0.45em;
+  transform: translateX(-0.3em);
+  opacity: 0.5;
+}
+
+.bracket-link:hover::before {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.bracket-link:hover::after {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* Link shimmer sweep (used by social links) */
+.route-link {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.route-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg, transparent 0%, rgba(255, 75, 38, 0.12) 18%, transparent 36%);
+  transform: translateX(-135%);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.route-link:hover::before {
+  transform: translateX(135%);
+}
+
+/* Nav link hover underline */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-primary);
+  transition: width 0.35s var(--ease-out-expo);
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current="page"]::after {
+  width: 100%;
 }

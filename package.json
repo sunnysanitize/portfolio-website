@@ -1,5 +1,5 @@
 {
-  "name": "sunny-development-website",
+  "name": "zh4ng-development-website",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.0",
+    "framer-motion": "^12.35.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
