@@ -9,6 +9,7 @@ export interface Project {
   showWebsiteButton?: boolean;
   sourceUrl: string;
   devpostUrl?: string;
+  documentUrl?: string;
   image: string;
 }
 
@@ -27,6 +28,7 @@ export const projects: Project[] = [
     tags: ["Next.js", "TypeScript", "React Flow", "D3 Force", "FastAPI", "Pydantic", "Supabase", "Server-Sent Events"],
     projectUrl: "https://tinysocietyai.com",
     sourceUrl: "https://github.com/sunnysanitize/tiny-society",
+    documentUrl: "/tiny-society-calculations-and-metrics.pdf",
     image: "/tinysociety.png",
   },
   {

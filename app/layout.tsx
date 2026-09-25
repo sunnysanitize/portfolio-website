@@ -4,6 +4,9 @@ import "./globals.css";
 import { geistSans, geistMono } from "./fonts";
 import SiteNav from "./components/SiteNav";
 import GrainCanvas from "./components/GrainCanvas";
+import MotionLayer from "./components/MotionLayer";
+import SmoothScroll from "./components/SmoothScroll";
+import "lenis/dist/lenis.css";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
@@ -11,7 +14,7 @@ export const viewport: Viewport = {
 };
 
 const title = "Sunny Zhang | Portfolio";
-const description = "Developer portfolio: projects, experience, and contact.";
+const description = "Sunny Zhang — Computer Science and Mathematics at the University of Toronto. Research in operations research, applied probability, and intelligent systems.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://sunnyzhang.dev"),
@@ -43,7 +46,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-background text-foreground antialiased`}
       >
+        <SmoothScroll />
         <GrainCanvas />
+        <MotionLayer />
         <div className="relative z-10 flex min-h-[100svh] flex-col overflow-x-hidden px-5 pt-[calc(0.5rem+env(safe-area-inset-top))] pl-[calc(1.25rem+env(safe-area-inset-left))] pr-[calc(1.25rem+env(safe-area-inset-right))] pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:px-10 sm:pt-3 md:px-16">
           <div className="relative mx-auto w-full max-w-6xl">
             <SiteNav />

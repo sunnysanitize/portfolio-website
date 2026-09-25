@@ -41,15 +41,16 @@ export default function ProjectsPage() {
             const hasProjectLink = project.projectUrl.trim().length > 0;
             const hasSourceLink = project.sourceUrl.trim().length > 0;
             const hasDevpostLink = (project.devpostUrl?.trim().length ?? 0) > 0;
+            const hasDocumentLink = (project.documentUrl?.trim().length ?? 0) > 0;
             const showWebsiteButton = project.showWebsiteButton !== false;
 
             return (
               <div
                 key={`${project.name}-${index}`}
-                className="group flex h-full flex-col py-6"
+                className="project-list-card group flex h-full flex-col py-8"
               >
                 <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:gap-4">
-                  <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden border border-line bg-background sm:aspect-auto sm:w-[20rem] md:w-[24rem]">
+                  <div className="project-card-image relative aspect-[16/10] w-full shrink-0 overflow-hidden border border-line bg-background sm:aspect-auto sm:w-[20rem] md:w-[24rem]">
                     {project.image ? (
                       <Image
                         src={project.image}
@@ -149,6 +150,16 @@ export default function ProjectsPage() {
                         >
                           <DevpostIcon className="h-3.5 w-3.5" />
                           Devpost
+                        </a>
+                      ) : null}
+                      {hasDocumentLink ? (
+                        <a
+                          href={project.documentUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={actionClass}
+                        >
+                          Metrics PDF
                         </a>
                       ) : null}
                     </div>
