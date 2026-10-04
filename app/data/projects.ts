@@ -55,6 +55,19 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: "Parallel State Aggregation",
+    description:
+      "A threaded benchmark of exact value iteration against adaptive state aggregation on maze MDPs up to a million states, where value iteration wins at every size tested.",
+    sourceUrl: "https://github.com/sunnysanitize/Parallel-State-Aggregation",
+    details: [
+      {
+        label: "Full report",
+        href: "https://github.com/sunnysanitize/Parallel-State-Aggregation/blob/main/docs/parallel_note.md",
+        linkLabel: "link",
+      },
+    ],
+  },
+  {
     name: "Theft Mapping Around UofT St. George",
     description:
       "A heatmap of Toronto Police theft-over-$5,000 incidents around the UofT St. George campus, built after my own laptop was stolen there.",
