@@ -98,9 +98,10 @@ export default function Home() {
           </h1>
 
           <p className="mt-3">
-            I study Computer Science and Mathematics at the University of
-            Toronto, St. George campus. My interests lie in operations research
-            and applied probability.
+            Second-year Computer Science and Mathematics student at the
+            University of Toronto. Machine learning, sequential decision making,
+            and mathematical optimization. Current work focuses on the behavior
+            of multi-agent LLM systems.
           </p>
 
           <p className="mt-5">
