@@ -98,10 +98,10 @@ export default function Home() {
           </h1>
 
           <p className="mt-3">
-            Second-year Computer Science and Mathematics student at the
-            University of Toronto. Machine learning, sequential decision making,
-            and mathematical optimization. Current work focuses on the behavior
-            of multi-agent LLM systems.
+            I study Computer Science and Mathematics at the University of
+            Toronto, St. George campus. My interests lie in machine learning,
+            sequential decision making, and mathematical optimization. My
+            current work focuses on the behaviour of multi-agent LLM systems.
           </p>
 
           <p className="mt-5">
