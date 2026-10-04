@@ -61,17 +61,4 @@ export const projects: Project[] = [
     projectUrl: "https://theftdataproject.sunnyzhang.dev",
     sourceUrl: "https://github.com/sunnysanitize/uoft-theft-map-project",
   },
-  {
-    name: "Markov Chain Model for Market Regime Forecasting",
-    description:
-      "A first-order Markov chain over daily equity return regimes (down, flat, up) that forecasts next-day state probabilities, with a Flask dashboard for threshold tuning and Monte Carlo simulation.",
-    sourceUrl:
-      "https://github.com/sunnysanitize/Markov-Chain-Model-for-Daily-Return-Regimes",
-  },
-  {
-    name: "Gambler's Ruin Simulation",
-    description:
-      "A stochastic risk simulator pairing Monte Carlo trials, up to 100k per run, with closed-form probability, including convergence diagnostics and empirical-versus-theoretical error tracking.",
-    sourceUrl: "https://github.com/sunnysanitize/gamblers-ruin-simulatior",
-  },
 ];
