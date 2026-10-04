@@ -84,10 +84,10 @@ export default function Home() {
         {/* h-auto is required: the CSS width overrides the width attribute, but
             the height attribute still applies without it, stretching the photo. */}
         <Image
-          src="/photo.png"
+          src="/headshot.png"
           alt="Sunny Zhang"
-          width={392}
-          height={370}
+          width={562}
+          height={537}
           priority
           className="h-auto w-[200px] shrink-0"
         />
