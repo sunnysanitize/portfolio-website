@@ -100,8 +100,7 @@ export default function Home() {
           <p className="mt-3">
             I study Computer Science and Mathematics at the University of
             Toronto, St. George campus. My interests lie in machine learning,
-            sequential decision making, and mathematical optimization. My
-            current work focuses on the behaviour of multi-agent LLM systems.
+            sequential decision making, and mathematical optimization.
           </p>
 
           <p className="mt-5">
