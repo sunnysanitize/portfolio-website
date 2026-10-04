@@ -25,9 +25,9 @@ const publications = [
   {
     title:
       "Language–Action Decoupling: Speech as a Weak Proxy for Action in LLM Hierarchies",
-    authors: "Sunny Zhang, Francesco Febbo, Harshit Saini",
-    venue:
-      "Accepted to four NeurIPS 2026 workshops: IAB, AIWILD, VerifyAgents, SocialAgent",
+    authors: "Zhang et al.",
+    venue: "Accepted to four NeurIPS 2026 workshops",
+    workshops: ["IAB", "AIWILD", "VerifyAgents", "SocialAgent"],
     paperUrl: "/language-action-decoupling.pdf",
   },
 ];
@@ -157,8 +157,9 @@ export default function Home() {
               <p className="leading-snug text-muted-foreground">
                 {paper.authors}
               </p>
+              <p className="mt-1 leading-snug font-semibold">{paper.venue}</p>
               <p className="leading-snug text-muted-foreground">
-                {paper.venue}
+                {paper.workshops.join(" · ")}
               </p>
               <p className="mt-1">
                 <a
