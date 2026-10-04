@@ -14,7 +14,7 @@ export const projects: Project[] = [
   {
     name: "Tiny Society",
     description:
-      "A multi-agent simulator that turns any user-authored world and cast into a seven-day narrative through planning, memory retrieval, reflection, and relationship consequences.",
+      "A multi-agent simulator that turns a user-authored world and cast into a seven-day narrative.",
     projectUrl: "https://tinysocietyai.com",
     sourceUrl: "https://github.com/sunnysanitize/tiny-society",
     details: [
@@ -28,7 +28,7 @@ export const projects: Project[] = [
   {
     name: "LaunchPilot",
     description:
-      "An AI launch assistant built in 36 hours: four agents research a market, write positioning, generate assets, and queue outreach behind a human approval gate, paired with a seven-day launch plan.",
+      "An AI launch assistant built in 36 hours, running four agents from market research to approved outreach.",
     projectUrl: "https://launchpilot-theta.vercel.app",
     sourceUrl: "https://github.com/LegendaryAKx3/launchpilot",
     details: [
@@ -44,7 +44,7 @@ export const projects: Project[] = [
   {
     name: "Feedback or Annealing?",
     description:
-      "A preregistered study of adaptive state aggregation on a 9,261-state MDP, separating the value of the Bellman residual signal from the annealing schedule it drives. Feedback shows no consistent benefit.",
+      "A preregistered study of adaptive state aggregation on a 9,261-state MDP, finding no consistent benefit from feedback.",
     sourceUrl: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
     details: [
       {
@@ -57,7 +57,7 @@ export const projects: Project[] = [
   {
     name: "Theft Mapping Around UofT St. George",
     description:
-      "A map of Toronto Police theft-over-$5,000 incidents around the UofT St. George campus, built after my own laptop was stolen there. A FastAPI pipeline filters records by campus boundary and a Next.js frontend renders the heatmap.",
+      "A heatmap of Toronto Police theft-over-$5,000 incidents around the UofT St. George campus, built after my own laptop was stolen there.",
     projectUrl: "https://theftdataproject.sunnyzhang.dev",
     sourceUrl: "https://github.com/sunnysanitize/uoft-theft-map-project",
   },
