@@ -42,6 +42,19 @@ export const projects: Project[] = [
     ],
   },
   {
+    name: "Feedback or Annealing?",
+    description:
+      "A preregistered study of adaptive state aggregation on a 9,261-state MDP, separating the value of the Bellman residual signal from the annealing schedule it drives. Feedback shows no consistent benefit.",
+    sourceUrl: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
+    details: [
+      {
+        label: "Paper",
+        href: "/feedback-or-annealing.pdf",
+        linkLabel: "PDF",
+      },
+    ],
+  },
+  {
     name: "Theft Mapping Around UofT St. George",
     description:
       "A map of Toronto Police theft-over-$5,000 incidents around the UofT St. George campus, built after my own laptop was stolen there. A FastAPI pipeline filters records by campus boundary and a Next.js frontend renders the heatmap.",

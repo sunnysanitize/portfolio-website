@@ -21,7 +21,7 @@ const experience = [
   },
 ];
 
-const research = [
+const publications = [
   {
     title:
       "Language–Action Decoupling: Speech as a Weak Proxy for Action in LLM Hierarchies",
@@ -29,14 +29,6 @@ const research = [
     venue:
       "Accepted to four NeurIPS 2026 workshops: IAB, AIWILD, VerifyAgents, SocialAgent",
     paperUrl: "/language-action-decoupling.pdf",
-  },
-  {
-    title:
-      "Feedback or Annealing? A Controlled Study of Adaptive State Aggregation",
-    authors: "Sunny Zhang",
-    venue: "Preprint",
-    paperUrl: "/feedback-or-annealing.pdf",
-    sourceUrl: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
   },
 ];
 
@@ -155,40 +147,30 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section title="Research">
+      <Section title="Publications">
         <ul className="space-y-5">
-          {research.map((paper) => {
+          {publications.map((paper) => (
             // Titles stay in ink like every other heading on the page; blue is
             // reserved for the link row, so each entry reads as one block.
-            const links = [
-              { label: "PDF", href: paper.paperUrl },
-              paper.sourceUrl ? { label: "code", href: paper.sourceUrl } : null,
-            ].filter((link) => link !== null);
-
-            return (
-              <li key={paper.title}>
-                <p className="font-semibold">{paper.title}</p>
-                <p className="leading-snug text-muted-foreground">
-                  {paper.authors}
-                </p>
-                <p className="leading-snug text-muted-foreground">
-                  {paper.venue}
-                </p>
-                <p className="mt-1">
-                  {links.map((link, i) => (
-                    <span key={link.label}>
-                      {i > 0 ? (
-                        <span className="mx-2 text-muted-foreground">·</span>
-                      ) : null}
-                      <a href={link.href} target="_blank" rel="noopener noreferrer">
-                        {link.label}
-                      </a>
-                    </span>
-                  ))}
-                </p>
-              </li>
-            );
-          })}
+            <li key={paper.title}>
+              <p className="font-semibold">{paper.title}</p>
+              <p className="leading-snug text-muted-foreground">
+                {paper.authors}
+              </p>
+              <p className="leading-snug text-muted-foreground">
+                {paper.venue}
+              </p>
+              <p className="mt-1">
+                <a
+                  href={paper.paperUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  PDF
+                </a>
+              </p>
+            </li>
+          ))}
         </ul>
       </Section>
 
