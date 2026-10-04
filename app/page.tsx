@@ -26,12 +26,7 @@ const publications = [
     title:
       "Language–Action Decoupling: Speech as a Weak Proxy for Action in LLM Hierarchies",
     authors: "Zhang et al.",
-    venues: [
-      "NeurIPS 2026 IAB Workshop",
-      "NeurIPS 2026 AIWILD Workshop",
-      "NeurIPS 2026 VerifyAgents Workshop",
-      "NeurIPS 2026 SocialAgent Workshop",
-    ],
+    venue: "Accepted to four NeurIPS 2026 workshops",
     paperUrl: "/language-action-decoupling.pdf",
   },
 ];
@@ -158,10 +153,12 @@ export default function Home() {
             // reserved for the link row, so each entry reads as one block.
             <li key={paper.title}>
               <p className="font-semibold">{paper.title}</p>
-              {/* Authors and every venue share one middot-separated line, so
-                  the four separate acceptances read off in a single pass. */}
+              {/* Authors and venue share one middot-separated line, the same
+                  shape the link rows elsewhere on the page use. */}
               <p className="leading-snug text-muted-foreground">
-                {[paper.authors, ...paper.venues].join(" · ")}
+                {paper.authors}
+                <span className="mx-2">·</span>
+                {paper.venue}
               </p>
               <p className="mt-1">
                 <a
