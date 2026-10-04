@@ -1,81 +1,268 @@
 import Image from "next/image";
-import CityWorld from "./components/world/CityWorld";
-import CheckpointAdvance from "./components/world/CheckpointAdvance";
-import DriveInstruction from "./components/world/DriveInstruction";
-import SocialButtons from "./components/SocialButtons";
 import { projects } from "./data/projects";
 
-function ArrowIcon() { return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path d="M7 17 17 7M7 7h10v10" /></svg>; }
+const EMAIL = "ssunny.zhang@mail.utoronto.ca";
+const GITHUB = "https://github.com/sunnysanitize";
+const LINKEDIN = "https://www.linkedin.com/in/sunnyzhang8";
 
-const featured = ["Tiny Society", "LaunchPilot"];
+const education = [
+  {
+    school: "University of Toronto",
+    detail: "Honours BSc, Double Major in Computer Science and Mathematics",
+    period: "2025 — 2029",
+  },
+];
+
+const experience = [
+  {
+    place: "Algoverse",
+    detail: "AI Research Intern, Algoverse AI Research Program",
+    period: "Jun 2026 — Sep 2026",
+  },
+];
 
 const research = [
-  { title: "Language–Action Decoupling", type: "Multi-agent systems", href: "/language-action-decoupling.pdf" },
-  { title: "Residual-Epsilon Aggregation", type: "Reinforcement learning", href: "/feedback-or-annealing.pdf" },
-  { title: "Parallel State Aggregation", type: "Optimization", href: "https://github.com/sunnysanitize/Parallel-State-Aggregation" },
+  {
+    title:
+      "Language–Action Decoupling: Speech as a Weak Proxy for Action in LLM Hierarchies",
+    authors: "Sunny Zhang, Francesco Febbo, Harshit Saini",
+    venue:
+      "Accepted to four NeurIPS 2026 workshops: IAB, AIWILD, VerifyAgents, SocialAgent",
+    paperUrl: "/language-action-decoupling.pdf",
+  },
+  {
+    title:
+      "Feedback or Annealing? A Controlled Study of Adaptive State Aggregation",
+    authors: "Sunny Zhang",
+    venue: "Preprint",
+    paperUrl: "/feedback-or-annealing.pdf",
+    sourceUrl: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
+  },
 ];
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="mt-12">
+      <h2 className="section-heading">{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+/**
+ * Dated row used by Education and Experience. The date sits in a fixed left
+ * column so both sections share one vertical rule, rather than drifting to the
+ * far right edge where it reads as detached from its entry.
+ */
+function EntryRow({
+  primary,
+  detail,
+  period,
+}: {
+  primary: string;
+  detail: string;
+  period: string;
+}) {
+  return (
+    <div className="flex flex-col gap-x-5 sm:flex-row sm:items-baseline">
+      <span className="shrink-0 text-muted-foreground sm:w-[7rem]">
+        {period}
+      </span>
+      <div className="min-w-0">
+        <p className="font-semibold">{primary}</p>
+        <p className="leading-snug text-muted-foreground">
+          {detail}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
-    <main className="drive-experience">
-      <CityWorld />
-      <section id="stop-0" className="drive-stop drive-hero">
-        <div className="stop-card hero-terminal">
-          <div className="terminal-bar"><span>CHECKPOINT 0</span><span className="terminal-live">ENGINE IDLING</span></div>
-          <h1>SUNNY<br /><span>ZHANG</span></h1>
-          <p className="hero-deck">I am currently studying Computer Science and Statistics at the University of Toronto, and my interests lie in operations research and applied probability.</p>
-          <div className="terminal-actions"><CheckpointAdvance target="#stop-1" /><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé ↗</a></div>
+    <div>
+      {/* ── Bio ───────────────────────────────────────────────── */}
+      <header className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+        {/* h-auto is required: the CSS width overrides the width attribute, but
+            the height attribute still applies without it, stretching the photo. */}
+        <Image
+          src="/photo.png"
+          alt="Sunny Zhang"
+          width={392}
+          height={370}
+          priority
+          className="h-auto w-[200px] shrink-0"
+        />
+
+        <div className="min-w-0">
+          <h1 className="font-semibold">
+            Sunny Zhang
+          </h1>
+
+          <p className="mt-3">
+            I study Computer Science and Mathematics at the University of
+            Toronto, St. George campus. My interests lie in operations research
+            and applied probability.
+          </p>
+
+          <p className="mt-5">
+            <a href={`mailto:${EMAIL}`}>Email</a>
+            <span className="mx-2 text-muted-foreground">·</span>
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              CV
+            </a>
+            <span className="mx-2 text-muted-foreground">·</span>
+            <a href={GITHUB} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            <span className="mx-2 text-muted-foreground">·</span>
+            <a href={LINKEDIN} target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </p>
         </div>
-        <DriveInstruction />
-      </section>
-      <section id="stop-1" className="drive-stop">
-        <div className="stop-card stop-card-right">
-          <div className="stop-number">STOP 01 <span>ENROLLED</span></div>
-          <p className="eyebrow text-primary">Academic record</p><h2>EDUCATION<br />DISTRICT</h2>
-          <div className="city-list">
-            <article><div className="company"><Image src="/uoftlogo.png" alt="" width={34} height={34} className="crest" /><div><strong>University of Toronto</strong><p>Computer Science &amp; Statistics</p></div></div><time>2025—29</time></article>
-          </div>
-          <div className="stop-advance"><CheckpointAdvance target="#stop-2" /></div>
+      </header>
+
+      <Section title="Education">
+        <div className="space-y-4">
+          {education.map((item) => (
+            <EntryRow
+              key={item.school}
+              primary={item.school}
+              detail={item.detail}
+              period={item.period}
+            />
+          ))}
         </div>
-      </section>
-      <section id="stop-2" className="drive-stop">
-        <div className="stop-card">
-          <div className="stop-number">STOP 02 <span>13:40:21</span></div>
-          <p className="eyebrow text-accent">Current coordinates</p><h2>EXPERIENCE<br />DISTRICT</h2>
-          <div className="city-list">
-            <article><div className="company"><Image src="/algoverse.webp" alt="" width={34} height={34} /><div><strong>Algoverse</strong><p>AI Research Intern</p></div></div><time>SUMMER 26</time></article>
-          </div>
-          <div className="stop-advance"><CheckpointAdvance target="#stop-3" /></div>
+      </Section>
+
+      <Section title="Experience">
+        <div className="space-y-4">
+          {experience.map((item) => (
+            <EntryRow
+              key={item.place}
+              primary={item.place}
+              detail={item.detail}
+              period={item.period}
+            />
+          ))}
         </div>
-      </section>
-      <section id="stop-3" className="drive-stop">
-        <div className="stop-card stop-card-right">
-          <div className="stop-number">STOP 03 <span>RESTRICTED LABS</span></div>
-          <p className="eyebrow text-primary">Research archive</p><h2>RESEARCH<br />SECTOR</h2>
-          <div className="city-list research-list">
-            {research.map((item, index) => <a href={item.href} target="_blank" rel="noopener noreferrer" key={item.title}><span>0{index + 1}</span><div><strong>{item.title}</strong><p>{item.type}</p></div><ArrowIcon /></a>)}
-          </div>
-          <div className="stop-advance"><CheckpointAdvance target="#stop-4" /></div>
-        </div>
-      </section>
-      <section id="stop-4" className="drive-stop">
-        <div className="stop-card stop-card-wide">
-          <div className="stop-number">STOP 04 <span>BUILD GRID</span></div>
-          <p className="eyebrow text-accent">Selected transmissions</p><h2>PROJECT<br />MARKET</h2>
-          <div className="project-transmissions">
-            {projects.filter((project) => featured.includes(project.name)).map((project, index) => { const href = project.projectUrl || project.sourceUrl; return <a href={href} target="_blank" rel="noopener noreferrer" key={project.name}><span>0{index + 1}</span><div><strong>{project.name}</strong><p>{project.featuredDescription ?? project.shortDescription}</p></div><ArrowIcon /></a>; })}
-          </div>
-          <div className="stop-advance"><CheckpointAdvance target="#stop-5" /></div>
-        </div>
-      </section>
-      <section id="stop-5" className="drive-stop drive-finale">
-        <div className="stop-card finale-card">
-          <div className="stop-number">FINAL STOP <span>CHANNELS OPEN</span></div>
-          <p className="eyebrow text-accent">Contact</p><h2>GET IN<br /><span>TOUCH</span></h2>
-          <p className="hero-deck">Email, GitHub, and LinkedIn below.</p><SocialButtons />
-          <CheckpointAdvance target="#stop-0" label="Restart journey" direction="up" className="restart-drive" />
-        </div>
-      </section>
-    </main>
+      </Section>
+
+      <Section title="Research">
+        <ul className="space-y-5">
+          {research.map((paper) => {
+            // Titles stay in ink like every other heading on the page; blue is
+            // reserved for the link row, so each entry reads as one block.
+            const links = [
+              { label: "PDF", href: paper.paperUrl },
+              paper.sourceUrl ? { label: "code", href: paper.sourceUrl } : null,
+            ].filter((link) => link !== null);
+
+            return (
+              <li key={paper.title}>
+                <p className="font-semibold">{paper.title}</p>
+                <p className="leading-snug text-muted-foreground">
+                  {paper.authors}
+                </p>
+                <p className="leading-snug text-muted-foreground">
+                  {paper.venue}
+                </p>
+                <p className="mt-1">
+                  {links.map((link, i) => (
+                    <span key={link.label}>
+                      {i > 0 ? (
+                        <span className="mx-2 text-muted-foreground">·</span>
+                      ) : null}
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label}
+                      </a>
+                    </span>
+                  ))}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+
+      <Section title="Projects">
+        <ul className="space-y-5">
+          {projects.map((project) => {
+            const site = project.projectUrl?.trim();
+
+            // Titles stay in ink like every other heading on the page; blue is
+            // reserved for the link row, so each entry reads as one block.
+            const links = [
+              site ? { label: "website", href: site } : null,
+              project.sourceUrl ? { label: "code", href: project.sourceUrl } : null,
+            ].filter((link) => link !== null);
+
+            return (
+              <li key={project.name}>
+                <p className="font-semibold">
+                  {site ? (
+                    <a
+                      href={site}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-foreground"
+                    >
+                      {project.name}
+                    </a>
+                  ) : (
+                    project.name
+                  )}
+                </p>
+                <p className="leading-snug text-muted-foreground">
+                  {project.description}
+                </p>
+                {project.details ? (
+                  <ul className="mt-1 pl-6 text-muted-foreground">
+                    {project.details.map((detail) => (
+                      <li key={detail.label}>
+                        {detail.href ? (
+                          <>
+                            {detail.label}{" ("}
+                            <a
+                              href={detail.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {detail.linkLabel ?? "link"}
+                            </a>
+                            )
+                          </>
+                        ) : (
+                          detail.label
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                <p className="mt-1">
+                  {links.map((link, i) => (
+                    <span key={link.label}>
+                      {i > 0 ? (
+                        <span className="mx-2 text-muted-foreground">·</span>
+                      ) : null}
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">
+                        {link.label}
+                      </a>
+                    </span>
+                  ))}
+                </p>
+              </li>
+            );
+          })}
+        </ul>
+      </Section>
+    </div>
   );
 }
