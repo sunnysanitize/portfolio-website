@@ -16,7 +16,7 @@ const education = [
 const experience = [
   {
     place: "Algoverse",
-    detail: "AI Research Intern, Algoverse AI Research Program",
+    detail: "Researcher",
     period: "Jun 2026 — Sep 2026",
   },
 ];
