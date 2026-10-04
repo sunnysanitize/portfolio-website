@@ -26,7 +26,8 @@ const publications = [
     title:
       "Language–Action Decoupling: Speech as a Weak Proxy for Action in LLM Hierarchies",
     authors: "Zhang et al.",
-    venue: "Accepted to four NeurIPS 2026 workshops",
+    venue:
+      "Accepted to four NeurIPS 2026 workshops: IAB, AIWILD, VerifyAgents, SocialAgent",
     paperUrl: "/language-action-decoupling.pdf",
   },
 ];
