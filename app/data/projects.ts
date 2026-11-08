@@ -1,96 +1,106 @@
+export type ProjectGroup = "Built" | "Competitions" | "Research";
+
 export interface Project {
   name: string;
+  group: ProjectGroup;
   description: string;
-  projectUrl?: string;
-  sourceUrl?: string;
-  details?: {
-    label: string;
-    href?: string;
-    linkLabel?: string;
-  }[];
+  /** Headline result shown under the title, e.g. a placement or prize. */
+  result?: string;
+  /** Featured projects appear on the home page, in array order. */
+  featured?: boolean;
+  links: { label: string; href: string }[];
 }
+
+/** Order of the groups on the /projects page. */
+export const projectGroups: ProjectGroup[] = ["Built", "Competitions", "Research"];
 
 export const projects: Project[] = [
   {
     name: "Tiny Society",
+    group: "Built",
+    featured: true,
     description:
       "A multi-agent simulator that turns a user-authored world and cast into a seven-day narrative.",
-    projectUrl: "https://tinysocietyai.com",
-    sourceUrl: "https://github.com/sunnysanitize/tiny-society",
-    details: [
-      {
-        label: "Calculations & metrics",
-        href: "/tiny-society-calculations-and-metrics.pdf",
-        linkLabel: "PDF",
-      },
+    links: [
+      { label: "website", href: "https://tinysocietyai.com" },
+      { label: "code", href: "https://github.com/sunnysanitize/tiny-society" },
+      { label: "metrics", href: "/tiny-society-calculations-and-metrics.pdf" },
     ],
   },
   {
     name: "LaunchPilot",
+    group: "Competitions",
+    featured: true,
+    result: "Winner, Backboard.io and SPUR Top 3",
     description:
       "An AI launch assistant built in 36 hours, running four agents from market research to approved outreach.",
-    projectUrl: "https://launchpilot-theta.vercel.app",
-    sourceUrl: "https://github.com/LegendaryAKx3/launchpilot",
-    details: [
-      { label: "Winner — Backboard.io: Best Use of Backboard" },
-      { label: "Winner — SPUR: Build a Real Canadian Startup (Top 3)" },
-      {
-        label: "Devpost",
-        href: "https://devpost.com/software/launchpilot-si9j8d",
-        linkLabel: "link",
-      },
+    links: [
+      { label: "website", href: "https://launchpilot-theta.vercel.app" },
+      { label: "code", href: "https://github.com/LegendaryAKx3/launchpilot" },
+      { label: "devpost", href: "https://devpost.com/software/launchpilot-si9j8d" },
     ],
   },
   {
-    name: "Robust Portfolio Optimization",
-    description:
-      "A pre-registered UTDSYS study of whether robust portfolios lower risk without giving up risk-adjusted return, now paper trading on Alpaca.",
-    projectUrl: "https://utdsys.com/quantitative-research/robust-portfolios",
-  },
-  {
     name: "QuantiFi 2026 Algorithmic Trading",
+    group: "Competitions",
+    featured: true,
+    result: "2nd in PnL of 30+ teams",
     description:
       "A market-making engine for 26 products with a fair-value model per product family, tuned on held-out days to avoid overfitting.",
-    details: [
-      { label: "2nd in PnL of 30+ teams" },
+    links: [{ label: "strategy report", href: "/quantifi-2026.pdf" }],
+  },
+  {
+    name: "Robust Portfolio Optimization",
+    group: "Research",
+    description:
+      "A pre-registered UTDSYS study of whether robust portfolios lower risk without giving up risk-adjusted return, now paper trading on Alpaca.",
+    links: [
       {
-        label: "Strategy report",
-        href: "/quantifi-2026.pdf",
-        linkLabel: "PDF",
+        label: "website",
+        href: "https://utdsys.com/quantitative-research/robust-portfolios",
       },
     ],
   },
   {
     name: "Feedback or Annealing?",
+    group: "Research",
     description:
       "A preregistered study of adaptive state aggregation on a 9,261-state MDP, finding no consistent benefit from feedback.",
-    sourceUrl: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
-    details: [
+    links: [
+      { label: "paper", href: "/feedback-or-annealing.pdf" },
       {
-        label: "Paper",
-        href: "/feedback-or-annealing.pdf",
-        linkLabel: "PDF",
+        label: "code",
+        href: "https://github.com/sunnysanitize/Residual-Epsilon-Aggregation",
       },
     ],
   },
   {
     name: "Parallel State Aggregation",
+    group: "Research",
     description:
       "A threaded benchmark of exact value iteration against adaptive state aggregation on maze MDPs up to a million states, where value iteration wins at every size tested.",
-    sourceUrl: "https://github.com/sunnysanitize/Parallel-State-Aggregation",
-    details: [
+    links: [
       {
-        label: "Full report",
+        label: "full report",
         href: "https://github.com/sunnysanitize/Parallel-State-Aggregation/blob/main/docs/parallel_note.md",
-        linkLabel: "link",
+      },
+      {
+        label: "code",
+        href: "https://github.com/sunnysanitize/Parallel-State-Aggregation",
       },
     ],
   },
   {
     name: "Theft Mapping Around UofT St. George",
+    group: "Built",
     description:
       "A heatmap of Toronto Police theft-over-$5,000 incidents around the UofT St. George campus, built after my own laptop was stolen there.",
-    projectUrl: "https://theftdataproject.sunnyzhang.dev",
-    sourceUrl: "https://github.com/sunnysanitize/uoft-theft-map-project",
+    links: [
+      { label: "website", href: "https://theftdataproject.sunnyzhang.dev" },
+      {
+        label: "code",
+        href: "https://github.com/sunnysanitize/uoft-theft-map-project",
+      },
+    ],
   },
 ];

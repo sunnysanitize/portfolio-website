@@ -2,10 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { sourceSerif } from "./fonts";
+import BackgroundPlane from "./components/BackgroundPlane";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: "#ffffff",
+  themeColor: "#eeeeec",
 };
 
 const title = "Sunny Zhang";
@@ -40,9 +41,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${sourceSerif.variable} bg-background text-foreground antialiased`}
+        className={`${sourceSerif.variable} text-foreground antialiased`}
       >
-        <div className="mx-auto flex min-h-[100svh] w-full max-w-[64rem] flex-col overflow-x-hidden px-5 pt-[calc(3rem+env(safe-area-inset-top))] pl-[calc(1.25rem+env(safe-area-inset-left))] pr-[calc(1.25rem+env(safe-area-inset-right))] pb-[calc(3rem+env(safe-area-inset-bottom))] sm:px-10 sm:pt-16">
+        <BackgroundPlane />
+        <div className="grain" aria-hidden="true" />
+        <div className="mx-auto flex min-h-[100svh] w-full max-w-[54rem] flex-col overflow-x-hidden px-5 pt-[calc(3rem+env(safe-area-inset-top))] pl-[calc(1.25rem+env(safe-area-inset-left))] pr-[calc(1.25rem+env(safe-area-inset-right))] pb-[calc(3rem+env(safe-area-inset-bottom))] sm:px-8 sm:pt-[88px]">
           <main className="flex-1">{children}</main>
         </div>
         <Analytics />

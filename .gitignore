@@ -23,6 +23,7 @@
 # local tooling
 /docs/superpowers/
 /.claude/
+/.superpowers/
 
 # misc
 .DS_Store
