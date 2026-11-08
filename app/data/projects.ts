@@ -2,7 +2,7 @@ export interface Project {
   name: string;
   description: string;
   projectUrl?: string;
-  sourceUrl: string;
+  sourceUrl?: string;
   details?: {
     label: string;
     href?: string;
@@ -38,6 +38,25 @@ export const projects: Project[] = [
         label: "Devpost",
         href: "https://devpost.com/software/launchpilot-si9j8d",
         linkLabel: "link",
+      },
+    ],
+  },
+  {
+    name: "Robust Portfolio Optimization",
+    description:
+      "A pre-registered UTDSYS study of whether robust portfolios lower risk without giving up risk-adjusted return, now paper trading on Alpaca.",
+    projectUrl: "https://utdsys.com/quantitative-research/robust-portfolios",
+  },
+  {
+    name: "QuantiFi 2026 Algorithmic Trading",
+    description:
+      "A market-making engine for 26 products with a fair-value model per product family, tuned on held-out days to avoid overfitting.",
+    details: [
+      { label: "2nd in PnL of 30+ teams" },
+      {
+        label: "Strategy report",
+        href: "/quantifi-2026.pdf",
+        linkLabel: "PDF",
       },
     ],
   },
