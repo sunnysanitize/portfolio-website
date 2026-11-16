@@ -20,18 +20,24 @@ export function Section({
   );
 }
 
-/** Title with the date (if any) aligned right, then any lines beneath it. */
+/**
+ * Optional small label, then the title with the date (if any) aligned right,
+ * then any lines beneath it.
+ */
 export function Entry({
   title,
   when,
+  label,
   children,
 }: {
   title: string;
   when?: string;
+  label?: string;
   children?: React.ReactNode;
 }) {
   return (
     <div className="entry">
+      {label ? <p className="entry-label">{label}</p> : null}
       <p className="entry-title">{title}</p>
       {when ? <span className="entry-when">{when}</span> : null}
       {children}
@@ -60,13 +66,34 @@ export function LinkRow({
   );
 }
 
-export function ProjectEntry({ project }: { project: Project }) {
+export function Tags({ items }: { items: string[] }) {
   return (
-    <Entry title={project.name}>
+    <ul className="entry-tags">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
+
+/** `index` numbers the entry within its section, starting at 1. */
+export function ProjectEntry({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  return (
+    <Entry
+      title={project.name}
+      label={`${String(index).padStart(2, "0")} · ${project.topic}`}
+    >
       {project.result ? (
         <p className="entry-result">{project.result}</p>
       ) : null}
       <p className="entry-desc">{project.description}</p>
+      {project.stack ? <Tags items={project.stack} /> : null}
       <LinkRow links={project.links} />
     </Entry>
   );
