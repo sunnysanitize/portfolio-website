@@ -20,6 +20,15 @@ export const projectGroups: ProjectGroup[] = ["Research", "Competitions", "Proje
 /** Within a section, projects are listed in array order. */
 export const projects: Project[] = [
   {
+    name: "HyperFocus",
+    group: "Projects",
+    topic: "On-device ML",
+    description:
+      "A macOS menu-bar app that notices when you drift from your work and helps you back, using an on-device classifier that judges each page in 3.5 ms.",
+    stack: ["Swift", "Core ML", "Python", "Next.js"],
+    links: [{ label: "Live site", href: "https://tryhyperfocus.com" }],
+  },
+  {
     name: "Tiny Society",
     group: "Projects",
     topic: "Multi-agent LLM systems",
